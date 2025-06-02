@@ -4,21 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Página Inicial</title>
-    <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <a class="navbar-brand" href="/">Biblioteca</a>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -33,6 +25,7 @@
                 <li class="nav-item"><a class="nav-link" href="/genero/">Gênero</a></li>
                 <li class="nav-item"><a class="nav-link" href="/leitor/">Leitor</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin/">Administração</a></li>
+                <li class="nav-item"><span class="nav-link disabled">Editar</span></li>
             </ul>
         </div>
     </nav>
@@ -43,69 +36,50 @@
             <p class="lead">Esta é a página inicial da Biblioteca</p>
             <p class="lead">Seja Bem-Vindo(a)</p>
         </div>
-<tbody>
-  {% for livros in livros %}
-  <tr>
-    <td>{{ livros.nome }}</td>
-    <td>{{ livros.autor }}</td>
-    <td>{{ livros.editora }}</td>
-    <td>
-      {% for genero in livros.genero.all %}
-        {{ genero.nome }}{% if not forloop.last %}, {% endif %}
-      {% endfor %}
-    </td>
-    <td>R$ {{ livros.preco }}</td>
-    <td>{{ livros.data_publicacao }}</td>
-    <td>{{ livros.status }}</td>
-    <td>
-      <form method="POST" action="{% url 'excluir_livro' livros.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-      </form>
-    </td>
-  </tr>
-  {% endfor %}
-</tbody>
 
         <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Nome</th>
-      <th scope="col">Autor</th>
-      <th scope="col">Editora</th>
-      <th scope="col">Gênero</th>
-      <th scope="col">Preço</th>
-      <th scope="col">Data Publicação</th>
-      <th scope="col">Status</th>
-      <th scope="col">Excluir</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for livro in livros %}
-    <tr>
-      <td>{{ livro.nome }}</td>
-      <td>{{ livro.autor }}</td>
-      <td>{{ livro.editora }}</td>
-      <td>{{ livro.genero }}</td>
-      <td>R$ {{ livro.preco }}</td>
-      <td>{{ livro.data_publicacao }}</td>
-      <td>{{ livro.status }}</td>
-      <td>
-        <form method="POST" action="{% url 'excluir_livro' livro.id %}">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Editora</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Data Publicação</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for livro in livros %}
+                <tr>
+                    <td>{{ livro.nome }}</td>
+                    <td>{{ livro.autor }}</td>
+                    <td>{{ livro.editora }}</td>
+                    <td>
+                        {% for genero in livro.genero.all %}
+                            {{ genero.nome }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>R$ {{ livro.preco }}</td>
+                    <td>{{ livro.data_publicacao }}</td>
+                    <td>{{ livro.status }}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm mr-1" disabled>Editar</button>
+                        <form method="POST" action="{% url 'excluir_livro' livro.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    <!-- jQuery, Popper.js e Bootstrap JS para Bootstrap 4 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+  
